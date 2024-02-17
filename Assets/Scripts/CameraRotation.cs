@@ -7,21 +7,21 @@ public class CameraRotation : MonoBehaviour
 
     public Transform CameraAxisTransform;
 
-    public float _sensitivity;
-    public float _minValue;
-    public float _maxValue;
+    public float sensitivity;
+    public float minValue;
+    public float maxValue;
 
     private void Update()
     {
-        var AngleY = transform.localEulerAngles.y + Time.deltaTime * _sensitivity * Input.GetAxis(MouseX);
+        var AngleY = transform.localEulerAngles.y + Time.deltaTime * sensitivity * Input.GetAxis(MouseX);
         transform.localEulerAngles = new Vector3(0, AngleY, 0);
 
-        var AngleX = CameraAxisTransform.localEulerAngles.x + Time.deltaTime * _sensitivity * Input.GetAxis(MouseY);
+        var AngleX = CameraAxisTransform.localEulerAngles.x + Time.deltaTime * sensitivity * Input.GetAxis(MouseY);
         if (AngleX > 180)
         {
             AngleX -= 360;
         }
-        AngleX = Mathf.Clamp(AngleX, _minValue, _maxValue);
+        AngleX = Mathf.Clamp(AngleX, minValue, maxValue);
         CameraAxisTransform.localEulerAngles = new Vector3(AngleX, 0, 0);
 
         //transform.Rotate(Input.GetAxis(MouseX) * Time.deltaTime * Vector3.up * _sensitivity);
