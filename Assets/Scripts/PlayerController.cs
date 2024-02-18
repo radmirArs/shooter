@@ -10,52 +10,23 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
 
     [SerializeField] private float jumpForce;
+    private string stayAnimation = "stay";//тег для анимации стойки
     [SerializeField] private float speed = 1;
     private CharacterController _characterController;
     
     // Start is called before the first frame update
     void Start()
     {
-        _characterController = GetComponent<CharacterController>();
-        _animator = GetComponent<Animator>();
+        InitComponentLinks();
     }
 
     private void Update()
     {
         
-            _animator.SetBool("Running_forward", false);
-            _animator.SetBool("Running_right", false);
-            _animator.SetBool("Running_left", false);
+        Move();
+        Jump();
         
-       
-        _moveVector = Vector3.zero;
-        if (Input.GetKeyDown(KeyCode.Space) && _characterController.isGrounded)
-        {
-            _fallVelocity = -jumpForce;
-        }
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            _animator.SetBool("Running_forward", true);
-            _moveVector += transform.forward;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            _animator.SetBool("Running_left", true);
-            _moveVector += transform.right;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            _animator.SetBool("Running_right", true);
-            _moveVector -= transform.right;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            _animator.SetBool("Running_forward", true);
-            _moveVector -= transform.forward;
-        }
     }
-
 
     void FixedUpdate()
     {
@@ -68,4 +39,89 @@ public class PlayerController : MonoBehaviour
         _fallVelocity += _gravity * Time.fixedDeltaTime;
         _characterController.Move(Vector3.down *  _fallVelocity * Time.fixedDeltaTime);
     }
+
+    void InitComponentLinks()
+    {
+        _characterController = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
+    }
+    public void Move()
+    {
+        _moveVector = Vector3.zero;
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            _animator.SetBool("Running_forward", true);
+            _moveVector += transform.forward;
+            speed = 5;
+        }
+        else
+        {
+            _animator.SetBool("Running_forward", false);
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            _animator.SetBool("Running_left", true);
+            _moveVector += transform.right;
+            speed = 3;
+        }
+        else
+        {
+            _animator.SetBool("Running_left", false);
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            _animator.SetBool("Running_right", true);
+            _moveVector -= transform.right;
+            speed = 3;
+        }
+        else
+        {
+            _animator.SetBool("Running_right", false);
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            _animator.SetBool("Running_back", true);
+            _moveVector -= transform.forward;
+            speed = 2;
+        }
+        else
+        {
+            _animator.SetBool("Running_back", false);
+        }
+    }
+
+    public void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && _characterController.isGrounded)
+        {
+            _fallVelocity = -jumpForce;
+            //проверка стоит ли персонаж или нет
+            if (IsAnimationPlayingByTag(stayAnimation))
+            {
+                _animator.SetTrigger("JumpStay");
+            }
+        }
+        
+    }
+
+    bool IsAnimationPlayingByTag(string tag)
+    {
+        // Проверяем состояние всех слоев анимаций
+        for (int i = 0; i < _animator.layerCount; i++)
+        {
+            // Получаем информацию о текущем состоянии аниматора
+            AnimatorStateInfo currentState = _animator.GetCurrentAnimatorStateInfo(i);
+            // Проверяем, соответствует ли текущая анимация тегу
+            if (currentState.IsTag(tag))
+            {
+                return true; // Проигрывается анимация с заданным тегом на текущем слое
+            }
+        }
+        return false; // На игроке не проигрывается анимация с заданным тегом
+    }
+
 }
