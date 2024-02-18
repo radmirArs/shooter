@@ -17,10 +17,12 @@ public class CameraRotation : MonoBehaviour
         transform.localEulerAngles = new Vector3(0, AngleY, 0);
 
         var AngleX = CameraAxisTransform.localEulerAngles.x + Time.deltaTime * sensitivity * Input.GetAxis(MouseY);
+
         if (AngleX > 180)
         {
             AngleX -= 360;
         }
+
         AngleX = Mathf.Clamp(AngleX, minValue, maxValue);
         CameraAxisTransform.localEulerAngles = new Vector3(AngleX, 0, 0);
 
