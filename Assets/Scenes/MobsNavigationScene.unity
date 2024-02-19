@@ -983,7 +983,7 @@ Transform:
   - {fileID: 960280583}
   - {fileID: 857083107}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1347801528
 GameObject:
@@ -1299,7 +1299,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1537,7 +1537,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: db44a6123c7c8d64c836378679dd1d29,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: db44a6123c7c8d64c836378679dd1d29,
         type: 3}
@@ -1547,7 +1547,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: db44a6123c7c8d64c836378679dd1d29,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: db44a6123c7c8d64c836378679dd1d29,
         type: 3}
@@ -1988,7 +1988,7 @@ PrefabInstance:
     - target: {fileID: 7676883260601262789, guid: 22a09a3baa7bfd342a975697f1dc7e01,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 9.42
       objectReference: {fileID: 0}
     - target: {fileID: 7676883260601262789, guid: 22a09a3baa7bfd342a975697f1dc7e01,
         type: 3}

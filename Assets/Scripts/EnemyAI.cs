@@ -22,12 +22,13 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         ControlRaycastEnemyUpdate();
+        ChaseUpdate();
         PatrolUpdate();
     }
 
     void ControlRaycastEnemyUpdate()
     {
-        _isPlayerNoticed = true;
+        _isPlayerNoticed = false;
         var direction = player.transform.position - transform.position;
         if (Vector3.Angle(transform.forward, direction) < viewAngle)
         {
@@ -40,9 +41,15 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    void ChaseUpdate()
+    {
+        if (_isPlayerNoticed)
+            _navMeshAgent.destination = player.transform.position;
+    }
+
     void PatrolUpdate()
     {
-        if (_navMeshAgent.remainingDistance == 0)
+        if (_navMeshAgent.remainingDistance == 0 && _isPlayerNoticed == false)
             EnemyMoveForPointRandom();
     }
 
