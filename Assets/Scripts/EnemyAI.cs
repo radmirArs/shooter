@@ -30,7 +30,7 @@ public class EnemyAI : MonoBehaviour
     {
         _isPlayerNoticed = false;
         var direction = player.transform.position - transform.position;
-        if (Vector3.Angle(transform.forward, direction) < viewAngle)
+        if (Vector3.Angle(transform.forward, direction) <= viewAngle)
         {
             RaycastHit hit;
             if (Physics.Raycast(transform.position + Vector3.up, direction, out hit))
@@ -49,8 +49,11 @@ public class EnemyAI : MonoBehaviour
 
     void PatrolUpdate()
     {
-        if (_navMeshAgent.remainingDistance == 0 && _isPlayerNoticed == false)
-            EnemyMoveForPointRandom();
+        if (!_isPlayerNoticed)
+        {
+            if (_navMeshAgent.remainingDistance == 0)
+                EnemyMoveForPointRandom();
+        }
     }
 
     void EnemyMoveForPointRandom()
