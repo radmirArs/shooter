@@ -321,6 +321,18 @@ MonoBehaviour:
   fireball: {fileID: 8923182586425491327, guid: 475b84a4eb08466459ad3e6e14c316d6,
     type: 3}
   pointForSpawn: {fileID: 1745961209426254904}
+--- !u!114 &5008235415512877638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7044214801567299711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 448b9f0ebfe4b9b4d8a27b02c11ab433, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7855260557517686062
 PrefabInstance:
   m_ObjectHideFlags: 0
