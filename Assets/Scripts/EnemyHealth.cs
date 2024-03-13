@@ -7,7 +7,6 @@ public class EnemyHealth : MonoBehaviour
 {
     public float health = 100;
     
-
     // Update is called once per frame
     void Update()
     {
