@@ -1,17 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class EnemyAI : MonoBehaviour
 {
     public List<Transform> patrolPoint;
     private NavMeshAgent _navMeshAgent;
+    private PlayerHealth _healthPlayer;
     private int i;
+    public Animator _animator;
 
     public PlayerController player;
     private bool _isPlayerNoticed;
     public float viewAngle;
+    public float damage = 30;
 
     void Start()
     {
@@ -23,9 +26,24 @@ public class EnemyAI : MonoBehaviour
     {
         ControlRaycastEnemyUpdate();
         ChaseUpdate();
+        AttackUpdate();
         PatrolUpdate();
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
+    private void AttackUpdate()
+    {
+        _animator.SetBool("AttackEnemy", false);
+        if (_isPlayerNoticed)
+        {
+            if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+            { 
+                _animator.SetBool("AttackEnemy", true);
+                _healthPlayer.DestroyEnemyUpdate((damage * Time.deltaTime));
+            }
+        }
+    }
+    
     void ControlRaycastEnemyUpdate()
     {
         _isPlayerNoticed = false;
@@ -51,7 +69,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (!_isPlayerNoticed)
         {
-            if (_navMeshAgent.remainingDistance == 0)
+            if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
                 EnemyMoveForPointRandom();
         }
     }
@@ -63,6 +81,8 @@ public class EnemyAI : MonoBehaviour
     }
     void InitComponentLinks()
     {
+        _animator = GetComponent<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        _healthPlayer =  player.GetComponent<PlayerHealth>();
     }
 }

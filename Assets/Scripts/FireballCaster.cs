@@ -6,13 +6,6 @@ public class FireballCaster : MonoBehaviour
 {
     public Transform fireball;
     public Transform pointForSpawn;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         MouseClickUpdate();

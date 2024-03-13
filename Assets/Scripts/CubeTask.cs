@@ -6,23 +6,37 @@ using Color = UnityEngine.Color;
 
 public class CubeTask : MonoBehaviour
 {
-    [SerializeField, Range(0, 1)] private float value;
-    public Material material;
-    public Transform cube1;
-    public Transform cube2;
-    // Start is called before the first frame update
-    
-    void Start()
-    {
+    public GameObject cubePrefab; // Префаб кубика
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.Lerp(cube1.transform.position, cube2.transform.position, value);
-        material.color = Color.Lerp(Color.red, Color.green, value);
-        transform.localScale = Vector3.Lerp(cube1.transform.localScale, cube2.transform.localScale, value);
+        // Проверяем нажатия кнопок мыши
+        if (Input.GetMouseButtonDown(0)) // Левая кнопка мыши
+        {
+            SpawnCube(); // Вызываем функцию создания кубика
+        }
+        else if (Input.GetMouseButtonDown(1)) // Правая кнопка мыши
+        {
+            DestroyObject(); // Вызываем функцию уничтожения объекта
+        }
+    }
 
+    void SpawnCube()
+    {
+        // Получаем позицию курсора в мировых координатах
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // Создаем копию префаба кубика в позиции курсора
+        Instantiate(cubePrefab, mousePosition, Quaternion.identity);
+    }
+
+    void DestroyObject()
+    {
+        // Проверяем, есть ли объект под курсором мыши
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+        {
+            // Если объект найден, уничтожаем его
+            Destroy(hit.collider.gameObject);
+        }
     }
 }
